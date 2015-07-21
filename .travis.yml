@@ -1,0 +1,23 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - '0.10'
+
+branches:
+  only:
+    - master
+    - travis-ci
+
+# Not using `npm install --dev` because it is recursive. It will pull in the all
+# development dependencies for CoffeeScript. Way too much spew in the Travis CI
+# build output.
+
+before_install:
+  - npm install
+  - npm install istanbul coveralls
+
+env:
+  global:
+  - secure: "TygTIX9VIT1TsEv7aobe6izZspUQ/0fwkQIrheDeE0kcJ2SJYHvEQ3ecc17L4PtQjJMujvyRlVLzD5OL/nKEwZd/geiPnoGOX4sN1S3/yHi99Qn3PU9lR63dp+5+b10iqc9QVe0VWFG2K7Q6ylyi0hMta7+ruv3gPtctlsUwJ/a7efS5M2ZTr36Ml/Vy4AstBoyA3m/rE2mAeyrVIG0Fte4glq9qXkiT+WgZvC27JiiUU4eRW1ndNGpCAZq7WgkubbRBnvW084d2VM4rFIlhmtraTxHVdcTTqlBZX+Gb8dhJT5+FSBStAlMgQbFKdTm3QeOGXO43S88YOjc4j4QwBYz4YYd5NbPP/1mBuqApuvRh6Uv9nsBGcXz+IUHDIcEn8TuCTW3tmUfo9iqOb8q5U5RXnczVKC3NDf/Hup1M+NLOHSgEPk1/YAUP+EMtjYDjScO7SsVb4K8OTv+mg4uynWU3k2dFffTAkMCfOEjphMGRN2TPW19ofAdEdPix92Pzx6BETZ42J8PktOtBJMCXxQIeeTasBSV6mRnDdkApP4gVJWAJ1wl69kXYqFhHpaV+n5akRZ6+/p7l/O6kdkmgnlKTozj+TS606JTrDkigAUqUzn1WsyT+gfUhU+ME5aa/ZzZ2RROhs3R5ikHQ7BzUJyO0TxZMmvHRwadVFSBN5Kg="
