@@ -18,8 +18,8 @@ function prove (async, assert) {
         now: 25034
     }
 
-    Service.prototype.serve = function (stats, callback) {
-        assert(stats, expected.stats, expected.message)
+    Service.prototype.serve = function (callback) {
+        assert(isochronous.stats, expected.stats, expected.message)
         now = expected.now
         callback()
     }
@@ -60,6 +60,7 @@ function prove (async, assert) {
     var isochronous = new Isochronous({
         interval: 5000,
         operation: { object: service, method: 'serve' },
+        vargs: [],
         _setTimeout: function (callback, when) { _setTimeout(callback, when) },
         _Date: { now: function () { return now } }
     })
