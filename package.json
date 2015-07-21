@@ -13,6 +13,11 @@
     [
     ],
     "main":                 "isochronous.js",
+    "dependencies":
+    {
+                            "operation": "0.0.1",
+                            "cadence": "0.0.56"
+    },
     "devDependencies":
     {
                             "proof": "0.0.52"
