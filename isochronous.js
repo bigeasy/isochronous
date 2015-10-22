@@ -1,5 +1,5 @@
 var Operation = require('operation')
-var cadence = require('cadence/redux')
+var cadence = require('cadence')
 
 function Isochronous (options) {
     this._interval = options.interval || 1000
@@ -34,7 +34,7 @@ Isochronous.prototype.run = cadence(function (async) {
     }, function () {
         function cancel () {
             if (this._stop) {
-                return [ loop ]
+                return [ loop.break ]
             }
         }
         var loop = async(function () {
