@@ -67,7 +67,5 @@ function prove (async, assert) {
 
     isochronous.stop()
 
-    async(function () {
-        isochronous.run(async())
-    })
+    isochronous.run(async())
 }
