@@ -15,7 +15,7 @@
     "main":                 "isochronous.js",
     "dependencies":
     {
-                            "operation": "0.0.1",
+                            "operation": "0.0.2",
                             "cadence": "0.4.0"
     },
     "devDependencies":
