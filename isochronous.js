@@ -4,6 +4,7 @@ var cadence = require('cadence')
 function Isochronous (options) {
     this._interval = options.interval || 1000
     this._operation = new Operation(options.operation)
+    // todo: remove underbars, this is a public feature.
     this._setTimeout = options._setTimeout || setTimeout
     this._Date = options._Date || Date
     this._vargs = options.vargs || []
