@@ -1,6 +1,6 @@
 {
     "name":                 "isochronous",
-    "version":              "0.0.4",
+    "version":              "0.0.5",
     "description":          "Invoke a function at regular intervals.",
     "author":               "Alan Gutierrez <alan@prettyrobots.com>",
     "homepage":             "https://bigeasy.github.io/isochronous",
