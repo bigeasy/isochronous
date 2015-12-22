@@ -3,8 +3,10 @@ var cadence = require('cadence')
 
 function Isochronous (options) {
     this._interval = options.interval || 1000
+    this._unref = options.unref || false
     this._operation = new Operation(options.operation)
-    // todo: remove underbars, this is a public feature.
+    // TODO remove underbars, this is a public feature.
+    // TODO It is‽
     this._setTimeout = options._setTimeout || setTimeout
     this._Date = options._Date || Date
     this._vargs = options.vargs || []
@@ -15,7 +17,10 @@ Isochronous.prototype._wait = function (stats, now, callback) {
     if (stats.overflow = delay < 0) {
         delay = 0
     }
-    this._timeout = (this._setTimeout)(this._callback = callback, delay)
+    this._timeout = this._setTimeout.call(null, this._callback = callback, delay)
+    if (this._unref) {
+        this._timeout.unref()
+    }
 }
 
 Isochronous.prototype.run = cadence(function (async) {

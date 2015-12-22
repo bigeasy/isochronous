@@ -67,5 +67,19 @@ function prove (async, assert) {
 
     isochronous.stop()
 
-    isochronous.run(async())
+    async(function () {
+        isochronous.run(async())
+    }, function () {
+        var isochronous = new Isochronous({
+            interval: 100,
+            operation: function (callback) { callback() },
+            unref: true
+        })
+        isochronous.run(async())
+        async(function () {
+            setTimeout(async(), 250)
+        }, function () {
+            isochronous.stop()
+        })
+    })
 }
