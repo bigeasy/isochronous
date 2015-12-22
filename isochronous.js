@@ -9,7 +9,6 @@ function Isochronous (options) {
     // TODO It is‽
     this._setTimeout = options._setTimeout || setTimeout
     this._Date = options._Date || Date
-    this._vargs = options.vargs || []
 }
 
 Isochronous.prototype._wait = function (stats, now, callback) {
@@ -47,7 +46,7 @@ Isochronous.prototype.run = cadence(function (async) {
             this._callback = null
         }, cancel, function () {
             stats.start = (this._Date).now()
-            this._operation.apply(this._vargs.concat(async()))
+            this._operation.apply([ async() ])
         }, cancel, function () {
             stats.iteration++
 

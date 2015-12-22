@@ -60,7 +60,6 @@ function prove (async, assert) {
     var isochronous = new Isochronous({
         interval: 5000,
         operation: { object: service, method: 'serve' },
-        vargs: [],
         _setTimeout: function (callback, when) { _setTimeout(callback, when) },
         _Date: { now: function () { return now } }
     })
