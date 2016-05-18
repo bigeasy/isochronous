@@ -1,6 +1,10 @@
 var Operation = require('operation')
 var cadence = require('cadence')
 
+// TODO Feel like there should be an option to have regular intervals that you
+// try to hit, which means skipping them if you've taken too long, and
+// alternatively an interval between completion.
+
 function Isochronous (options) {
     this._interval = options.interval || 1000
     this._unref = options.unref || false
