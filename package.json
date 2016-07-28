@@ -15,12 +15,12 @@
     "main":                 "isochronous.js",
     "dependencies":
     {
-                            "cadence": "1.x",
-                            "operation": "1.x"
+                            "cadence":                      "1.x",
+                            "operation":                    "1.x"
     },
     "devDependencies":
     {
-                            "proof": "1.x"
+                            "proof":                        "1.x"
     },
     "scripts":
     {
