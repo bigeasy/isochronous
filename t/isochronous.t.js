@@ -1,7 +1,7 @@
 require('proof')(5, require('cadence')(prove))
 
 function prove (async, assert) {
-    var Isochronous = require('../..')
+    var Isochronous = require('..')
 
     function Service () {
     }
