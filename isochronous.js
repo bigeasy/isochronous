@@ -31,7 +31,7 @@ Isochronous.prototype.run = cadence(function (async) {
 
     var now = (this._Date).now()
     var stats = this.stats = {
-        scheduled: (Math.floor(now / 1000) * 1000) + this._interval,
+        scheduled: (Math.floor(now / 1000) * 1000),
         start: null,
         duration: null,
         overflow: false,
@@ -57,6 +57,7 @@ Isochronous.prototype.run = cadence(function (async) {
             var now = (this._Date).now()
 
             stats.duration = now - stats.start
+// TODO Need to advance if updated scheudled is in the past.
             stats.scheduled = stats.scheduled + this._interval
 
             this._wait(stats, now, async())

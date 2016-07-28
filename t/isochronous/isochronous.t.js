@@ -8,14 +8,14 @@ function prove (async, assert) {
 
     var expected = {
         stats: {
-            scheduled: 20000,
-            start: 20004,
+            scheduled: 15000,
+            start: 15500,
             duration: null,
-            overflow: false,
+            overflow: true,
             iteration: 0
         },
         message: 'initial stats',
-        now: 25034
+        now: 15600
     }
 
     Service.prototype.serve = function (callback) {
@@ -28,28 +28,28 @@ function prove (async, assert) {
 
     var now = 15301
     var _setTimeout = function (callback, when) {
-        assert(when, 4699, 'initial timeout')
+        assert(when, 0, 'initial timeout')
         _setTimeout = function (callback, when) {
+            now += when + 100
             expected = {
                 stats: {
-                    scheduled: 25000,
-                    start: 25043,
-                    duration: 5030,
-                    overflow: true,
+                    scheduled: 20000,
+                    start: 20100,
+                    duration: 100,
+                    overflow: false,
                     iteration: 1
                 },
                 message: 'subsequent stats',
-                now: now + 2340
+                now: now + 200
             }
-            now += 9
-            assert(when, 0, 'overflow')
+            assert(when, 4400, 'overflow')
             _setTimeout = function (callback, when) {
-                assert(when, 2626, 'final timeout')
+                assert(when, 4700, 'final timeout')
                 isochronous.stop()
             }
             callback()
         }
-        now = 20004
+        now = 15500
         callback()
     }
 
