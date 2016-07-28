@@ -1,18 +1,23 @@
 {
     "name":                 "isochronous",
     "version":              "1.0.1",
-    "description":          "Invoke a function at regular intervals.",
-    "author":               "Alan Gutierrez <alan@prettyrobots.com>",
-    "homepage":             "https://bigeasy.github.io/isochronous",
-    "bugs":                 "https://github.com/bigeasy/isochronous/issues",
+    "description":
+
+      "Invoke a function at regular intervals.",
+
     "keywords":
     [
                             "interval", "timer", "isochronous"
     ],
-    "contributors":
-    [
-    ],
-    "main":                 "isochronous.js",
+    "author":               "Alan Gutierrez <alan@prettyrobots.com>",
+    "homepage":             "https://bigeasy.github.io/isochronous",
+    "bugs":                 "https://github.com/bigeasy/isochronous/issues",
+    "license":              "MIT",
+    "repository":
+    {
+                            "type": "git",
+                            "url": "http://github.com/bigeasy/isochronous.git"
+    },
     "dependencies":
     {
                             "cadence":                      "1.x",
@@ -22,14 +27,9 @@
     {
                             "proof":                        "1.x"
     },
+    "main":                 "isochronous",
     "scripts":
     {
                             "test": "proof platform win32 && proof test */*/*.t.* || t/test"
-    },
-    "license":              "MIT",
-    "repository":
-    {
-                            "type": "git",
-                            "url": "http://github.com/bigeasy/isochronous.git"
     }
 }
