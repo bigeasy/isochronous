@@ -53,13 +53,8 @@ function prove (async, assert) {
         callback()
     }
 
-    new Isochronous({
-        operation: { object: service, method: 'serve' }
-    })
-
-    var isochronous = new Isochronous({
+    var isochronous = new Isochronous(service, 'serve', {
         interval: 5000,
-        operation: { object: service, method: 'serve' },
         _setTimeout: function (callback, when) { _setTimeout(callback, when) },
         _Date: { now: function () { return now } }
     })
@@ -69,9 +64,10 @@ function prove (async, assert) {
     async(function () {
         isochronous.run(async())
     }, function () {
-        var isochronous = new Isochronous({
+        var isochronous = new Isochronous(function (callback) {
+            callback()
+        }, {
             interval: 100,
-            operation: function (callback) { callback() },
             unref: true
         })
         isochronous.run(async())

@@ -1,18 +1,21 @@
-var Operation = require('operation')
 var cadence = require('cadence')
+var coalesce = require('extant')
+var Operation = require('operation/variadic')
 
 // TODO Feel like there should be an option to have regular intervals that you
 // try to hit, which means skipping them if you've taken too long, and
 // alternatively an interval between completion.
 
-function Isochronous (options) {
-    this._interval = options.interval || 1000
-    this._unref = options.unref || false
-    this._operation = new Operation(options.operation)
+function Isochronous () {
+    var vargs = Array.prototype.slice.call(arguments)
+    this._operation = new Operation(vargs)
+    var options = coalesce(vargs.shift(), {})
+    this._interval = coalesce(options.interval, 1000)
+    this._unref = coalesce(options.unref, false)
     // TODO remove underbars, this is a public feature.
     // TODO It is‽
-    this._setTimeout = options._setTimeout || setTimeout
-    this._Date = options._Date || Date
+    this._setTimeout = coalesce(options._setTimeout, setTimeout)
+    this._Date = coalesce(options._Date, Date)
 }
 
 Isochronous.prototype._wait = function (stats, now, callback) {
@@ -50,7 +53,7 @@ Isochronous.prototype.run = cadence(function (async) {
             this._callback = null
         }, cancel, function () {
             stats.start = (this._Date).now()
-            this._operation.apply([ async() ])
+            this._operation.call(null, async())
         }, cancel, function () {
             stats.iteration++
 
