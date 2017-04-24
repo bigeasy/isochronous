@@ -1,4 +1,4 @@
-require('proof')(5, require('cadence')(prove))
+require('proof')(7, require('cadence')(prove))
 
 function prove (async, assert) {
     var Isochronous = require('..')
@@ -65,16 +65,17 @@ function prove (async, assert) {
         isochronous.run(async())
     }, function () {
         var isochronous = new Isochronous(function (callback) {
-            callback()
-        }, {
-            interval: 100,
-            unref: true
-        })
-        isochronous.run(async())
-        async(function () {
-            setTimeout(async(), 250)
-        }, function () {
+            assert(true, 'number')
             isochronous.stop()
-        })
+            callback()
+        }, 100)
+        isochronous.run(async())
+    }, function () {
+        var isochronous = new Isochronous(function (callback) {
+            assert(true, 'unref')
+            isochronous.stop()
+            callback()
+        }, { interval: 100, unref: false })
+        isochronous.run(async())
     })
 }

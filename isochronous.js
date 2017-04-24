@@ -10,6 +10,9 @@ function Isochronous () {
     var vargs = Array.prototype.slice.call(arguments)
     this._operation = new Operation(vargs)
     var options = coalesce(vargs.shift(), {})
+    if (typeof options == 'number') {
+        options = { interval: options }
+    }
     this._interval = coalesce(options.interval, 1000)
     this._unref = coalesce(options.unref, false)
     // TODO remove underbars, this is a public feature.
