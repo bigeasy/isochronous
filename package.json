@@ -22,7 +22,7 @@
     {
                             "cadence":                      "1.0.x",
                             "extant":                       "1.0.x",
-                            "operation":                    "1.4.x"
+                            "operation":                    "1.6.x"
     },
     "devDependencies":
     {
