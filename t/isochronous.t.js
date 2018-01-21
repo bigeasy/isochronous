@@ -66,16 +66,20 @@ function prove (async, assert) {
     }, function () {
         var isochronous = new Isochronous(function (callback) {
             assert(true, 'number')
+            unref: true,
             isochronous.stop()
             callback()
         }, 100)
         isochronous.run(async())
     }, function () {
+        var called = 0
         var isochronous = new Isochronous(function (callback) {
-            assert(true, 'unref')
-            isochronous.stop()
+            if (++called == 3) {
+                assert(true, 'unref')
+                isochronous.stop()
+            }
             callback()
-        }, { interval: 100, unref: false })
+        }, { interval: 100, unref: true })
         isochronous.run(async())
     })
 }

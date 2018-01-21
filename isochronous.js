@@ -27,7 +27,7 @@ Isochronous.prototype._wait = function (stats, now, callback) {
         delay = 0
     }
     this._timeout = this._setTimeout.call(null, this._callback = callback, delay)
-    if (this._unref) {
+    if (this._unref && delay != 0) {
         this._timeout.unref()
     }
 }
