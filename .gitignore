@@ -2,3 +2,5 @@
 /.proof.out
 /coverage
 /npm-debug.log
+/.wiseguy
+/docs
