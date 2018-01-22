@@ -1,6 +1,0 @@
-[submodule "isochronous"]
-	path = isochronous
-	url = https://github.com/bigeasy/isochronous.git
-[submodule "vendor/lesshat"]
-	path = vendor/lesshat
-	url = https://github.com/madebysource/lesshat.git
