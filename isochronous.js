@@ -1,82 +1,76 @@
-var cadence = require('cadence')
-var coalesce = require('extant')
-var Operation = require('operation/variadic')
+const coalesce = require('extant')
+const delay = require('delay')
 
 // TODO Feel like there should be an option to have regular intervals that you
 // try to hit, which means skipping them if you've taken too long, and
 // alternatively an interval between completion.
 
-function Isochronous () {
-    var vargs = Array.prototype.slice.call(arguments)
-    this._operation = new Operation(vargs)
-    var options = coalesce(vargs.shift(), {})
-    if (typeof options == 'number') {
-        options = { interval: options }
-    }
-    this._interval = coalesce(options.interval, 1000)
-    this._unref = coalesce(options.unref, false)
-    // TODO remove underbars, this is a public feature.
-    // TODO It is‽
-    this._setTimeout = coalesce(options._setTimeout, setTimeout)
-    this._Date = coalesce(options._Date, Date)
-}
+class Isochronous {
+    constructor (...vargs) {
+        this.interval = vargs.shift()
 
-Isochronous.prototype._wait = function (stats, now, callback) {
-    var delay = stats.scheduled - now
-    if (stats.overflow = delay < 0) {
-        delay = 0
-    }
-    this._timeout = this._setTimeout.call(null, this._callback = callback, delay)
-    if (this._unref && delay != 0) {
-        this._timeout.unref()
-    }
-}
+        this._skip = typeof vargs[0] == 'boolean' ? vargs.shift() : false
 
-Isochronous.prototype.run = cadence(function (async) {
-    this._stop = false
+        this._stop = false
 
-    var now = (this._Date).now()
-    var stats = this.stats = {
-        scheduled: (Math.floor(now / 1000) * 1000),
-        start: null,
-        duration: null,
-        overflow: false,
-        iteration: 0
+        this._f = vargs.shift()
+
+        this._deferral = delay(0)
     }
 
-    async(function () {
-        this._wait(stats, now, async())
-    }, function () {
-        function cancel () {
-            if (this._stop) {
-                return [ loop.break ]
+    async start () {
+        this._stop = false
+
+        const now = Date.now()
+        let scheduled = Math.floor(now / 1000) * 1000
+        while ((scheduled + this.interval) < now) {
+            scheduled += this.interval
+        }
+
+        const status = this.status = {
+            scheduled: scheduled,
+            interval: this.interval,
+            previous: null,
+            start: null,
+            duration: null,
+            skip: 0,
+            iteration: 0
+        }
+
+        let difference = 0
+        while (!this._stop) {
+            if (difference != 0) {
+                await (this._deferral = delay(difference))
+                difference = 0
+                continue
+            }
+            status.when = Date.now()
+            await this._f.call()
+            const now = Date.now()
+            status.iteration++
+            status.previous = {
+                when: status.when,
+                duration: now - status.when,
+                skip: status.skip
+            }
+            status.skip = 0
+            status.scheduled += status.interval
+            difference = status.scheduled - now
+            while (difference < 0) {
+                if (this._skip) {
+                    status.skip++
+                    status.scheduled += status.interval
+                    difference = status.scheduled - now
+                } else {
+                    difference = 0
+                }
             }
         }
-        var loop = async(function () {
-            this._callback = null
-        }, cancel, function () {
-            stats.start = (this._Date).now()
-            this._operation.call(null, async())
-        }, cancel, function () {
-            stats.iteration++
+    }
 
-            var now = (this._Date).now()
-
-            stats.duration = now - stats.start
-// TODO Need to advance if updated scheudled is in the past.
-            stats.scheduled = stats.scheduled + this._interval
-
-            this._wait(stats, now, async())
-        })()
-    })
-})
-
-Isochronous.prototype.stop = function () {
-    this._stop = true
-    var callback
-    if (callback = this._callback) {
-        clearTimeout(this._timeout)
-        callback()
+    stop () {
+        this._stop = true
+        this._deferral.clear()
     }
 }
 

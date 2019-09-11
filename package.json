@@ -20,17 +20,15 @@
     },
     "dependencies":
     {
-                            "cadence":                      "1.0.x",
-                            "extant":                       "1.0.x",
-                            "operation":                    "1.6.x"
+                            "delay":                        "^4.3.0",
+                            "extant":                       "^1.0.13"
     },
     "devDependencies":
     {
-                            "proof":                        "3.0.x"
     },
     "main":                 "isochronous",
     "scripts":
     {
-                            "test": "proof platform win32 && proof test */*.t.js || t/test"
+                            "test": "mocha test/*.test.js"
     }
 }

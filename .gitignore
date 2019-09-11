@@ -1,5 +1,5 @@
 /node_modules
-/.proof.out
+/.nyc_output
 /coverage
 /npm-debug.log
 /.wiseguy
