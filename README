@@ -1,6 +1,6 @@
 Isochronous
 
-Convert Node.js Paxos messages to binary to share with alternate implementations.
+Invoke a function at regular intervals.
 
     Discussion:     https://github.com/bigeasy/isochronous/issues/1
 
