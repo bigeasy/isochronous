@@ -45,7 +45,7 @@ class Isochronous {
                 continue
             }
             status.when = Date.now()
-            await this._f.call()
+            await this._f.call(null, status)
             const now = Date.now()
             status.iteration++
             status.previous = {
