@@ -21,8 +21,8 @@ jobs:
       run: npm install --no-package-lock
     - name: npm ls
       run: npm ls
-    - name: npm install nyc, mocha, codecov
-      run:  npm install -g nyc mocha codecov
+    - name: npm install nyc, prove, codecov
+      run:  npm install -g nyc prove codecov
     - name: npm test
       run: nyc npm test
       env:

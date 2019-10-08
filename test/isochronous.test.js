@@ -1,7 +1,6 @@
-describe('isochronous', () => {
+require('proof')(2, async (okay) => {
     const delay = require('delay')
-    const assert = require('assert')
-    it('can skip', async () => {
+    {
         const test = []
         const Isochronous = require('../isochronous')
         let count = 0
@@ -19,13 +18,13 @@ describe('isochronous', () => {
                 console.log('>>>', count)
             }
             if (count == 2) {
-                assert.equal(isochronous.status.skip, 1, 'skipped')
+                okay(isochronous.status.skip, 1, 'skipped')
                 isochronous.stop()
             }
         })
         await isochronous.start()
-    })
-    it('can race', async () => {
+    }
+    {
         const test = []
         const Isochronous = require('../isochronous')
         let count = 0
@@ -41,10 +40,10 @@ describe('isochronous', () => {
                 await delay(121)
             }
             if (count == 2) {
-                assert.equal(isochronous.status.skip, 0, 'raced')
+                okay(isochronous.status.skip, 0, 'raced')
                 isochronous.stop()
             }
         })
         await isochronous.start()
-    })
+    }
 })
