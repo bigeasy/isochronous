@@ -1,5 +1,4 @@
 const coalesce = require('extant')
-const delay = require('delay')
 
 // TODO Feel like there should be an option to have regular intervals that you
 // try to hit, which means skipping them if you've taken too long, and
@@ -15,7 +14,8 @@ class Isochronous {
 
         this._f = vargs.shift()
 
-        this._deferral = delay(0)
+        this._resolve = () => {}
+        this._timeout = null
     }
 
     async start () {
@@ -40,7 +40,10 @@ class Isochronous {
         let difference = 0
         while (!this._stop) {
             if (difference != 0) {
-                await (this._deferral = delay(difference))
+                await new Promise(resolve => {
+                    this._resolve = resolve
+                    this._timeout = setTimeout(resolve, difference)
+                })
                 difference = 0
                 continue
             }
@@ -70,7 +73,8 @@ class Isochronous {
 
     stop () {
         this._stop = true
-        this._deferral.clear()
+        clearTimeout(this._timeout)
+        this._resolve.call()
     }
 }
 
