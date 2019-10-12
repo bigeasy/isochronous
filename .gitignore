@@ -1,6 +1,6 @@
-/node_modules
+/.dots
 /.nyc_output
-/coverage
-/npm-debug.log
 /.wiseguy
+/coverage
 /docs
+/node_modules
