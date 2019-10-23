@@ -1,6 +1,6 @@
 {
     "name":                 "isochronous",
-    "version":              "4.0.0-alpha.3",
+    "version":              "4.0.0-alpha.4",
     "description":
 
       "Invoke a function at regular intervals.",
